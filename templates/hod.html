@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>{{ current_user.role.capitalize() }} Portal</h3>
+<table class="table mt-4 shadow">
+    <thead class="table-dark">
+        <tr>
+            <th>Student</th>
+            <th>Type</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for app in apps %}
+            {% set show = false %}
+            {% if current_user.role == 'staff' and app.status == 'Pending' %}{% set show = true %}{% endif %}
+            {% if current_user.role == 'hod' and app.status == 'Staff Approved' %}{% set show = true %}{% endif %}
+            {% if current_user.role == 'principal' and app.status == 'HOD Approved' %}{% set show = true %}{% endif %}
+
+            {% if show %}
+            <tr>
+                <td>{{ app.student_name }}</td>
+                <td>{{ app.request_type }}</td>
+                <td>{{ app.reason }}</td>
+                <td><span class="badge bg-warning text-dark">{{ app.status }}</span></td>
+                <td>
+                    <a href="{{ url_for('action', id=app.id, action_type='approve') }}" class="btn btn-success btn-sm">Approve</a>
+                    <a href="{{ url_for('action', id=app.id, action_type='reject') }}" class="btn btn-danger btn-sm">Reject</a>
+                </td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

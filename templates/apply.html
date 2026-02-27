@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Inga unga root and existing styles irukkattum */
+    :root { --primary: #6366f1; --bg: #0f172a; --card-bg: rgba(30, 41, 59, 0.7); --text: #f8fafc; }
+    body { background: #0f172a; color: var(--text); }
+    .main-content { margin-left: 280px; padding: 30px 40px; }
+    
+    .form-container {
+        background: var(--card-bg);
+        border-radius: 24px;
+        padding: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        max-width: 600px;
+        margin: 50px auto;
+        backdrop-filter: blur(10px);
+    }
+    /* Rest of your styling... */
+</style>
+
+<div class="main-content">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div style="background: rgba(99, 102, 241, 0.2); color: #818cf8; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--primary);">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="form-container shadow-lg">
+        <h2 class="text-center mb-4" style="background: linear-gradient(to right, #00d2ff, #3a7bd5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; font-family: sans-serif;">
+            Submit New Request
+        </h2>
+        
+        <form action="{{ url_for('apply') }}" method="POST">
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Request Type</label>
+                <select name="request_type" class="form-control" style="width: 100%; background: #0f172a; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px;" required>
+                    <option value="" disabled selected>Select Request Type</option>
+                    <option value="Bonafide Certificate">Bonafide Certificate</option>
+                    <option value="On Duty (OD)">On Duty (OD)</option>
+                    <option value="Leave Permission">Leave Permission</option>
+                    <option value="ID Card Re-issue">ID Card Re-issue</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Reason / Purpose</label>
+                <textarea name="reason" class="form-control" rows="4" style="width: 100%; background: #0f172a; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px;" placeholder="Briefly explain your request..." required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" style="background: linear-gradient(135deg, var(--primary), #a855f7); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; width: 100%; cursor: pointer;">
+                <i class="fas fa-paper-plane"></i> Submit Application
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

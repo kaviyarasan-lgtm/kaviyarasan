@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Login</title>
+    <style>
+        /* Main Background Setup */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Animated Circles in Background */
+        .background-circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .circle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: move 25s infinite linear;
+        }
+
+        @keyframes move {
+            from { transform: translateY(0) rotate(0deg); opacity: 1; }
+            to { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Glassmorphism Card Effect */
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            width: 350px;
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #fff;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        /* Input Styling */
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #fff;
+            outline: none;
+            color: #fff;
+            font-size: 16px;
+            transition: 0.5s;
+        }
+
+        input:focus {
+            border-bottom: 2px solid #00d2ff;
+        }
+
+        /* Flash Messages Styling */
+        .flash-msg {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff4d4d;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            border: 1px solid #ff4d4d;
+        }
+
+        /* Button Animation */
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            background: #00d2ff;
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 210, 255, 0.5);
+        }
+
+        p {
+            color: #ddd;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        a {
+            color: #00d2ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-circles">
+        <div class="circle" style="width: 80px; height: 80px; left: 10%; bottom: -100px;"></div>
+        <div class="circle" style="width: 120px; height: 120px; left: 70%; bottom: -150px; animation-delay: 5s;"></div>
+        <div class="circle" style="width: 50px; height: 50px; left: 40%; bottom: -80px; animation-delay: 2s;"></div>
+    </div>
+
+    <div class="login-container">
+        <h2>LOGIN</h2>
+        
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="flash-msg">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="input-group">
+                <input type="email" name="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit">LOGIN</button>
+        </form>
+        
+        <p>Don't have an account? <a href="/register">Register here</a></p>
+    </div>
+
+</body>
+</html>

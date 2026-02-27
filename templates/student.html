@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 d-flex justify-content-between align-items-center mb-4">
+        <h2>My Applications</h2>
+        <a href="{{ url_for('apply') }}" class="btn btn-success">
+             + New Application
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Application ID</th>
+                            <th>Type</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in apps %}
+                        <tr>
+                            <td>#{{ app.id }}</td>
+                            <td><span class="badge bg-secondary">{{ app.request_type }}</span></td>
+                            <td>{{ app.reason }}</td>
+                            <td>
+                                {% if app.status == 'Approved' %}
+                                    <span class="badge bg-success">Approved ✅</span>
+                                {% elif app.status == 'Rejected' %}
+                                    <span class="badge bg-danger">Rejected ❌</span>
+                                {% elif 'Approved' in app.status %}
+                                    <span class="badge bg-info text-dark">{{ app.status }}</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark">Pending ⏳</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">No applications found. Click "New Application" to start.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
